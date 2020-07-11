@@ -1,0 +1,65 @@
+server:
+  port: 8805
+  servlet:
+    context-path: /rsp
+spring:
+  application:
+    name: rsp-dictory
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://109.244.99.170:3306/rsp_server_access?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://10.10.30.9:30001/rsp_server_deploy?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    #password: root123456ABCD!@#
+    password:  P@ssw0rd
+    #password: root
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 1
+      maximum-pool-size: 5
+      idle-timeout: 10000
+      auto-commit: true
+  redis:
+    host: localhost
+    post: 6379
+  kafka:
+    bootstrap-servers: hdp-01:9092,hdp-02:9092,hdp-03:9092
+    producerNum:  1
+    acks: 1
+    retries: 3
+    batchSize: 16384
+    compressionType: gzip
+    linger-ms: 5000
+    bufferMemory: 33554432
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    topic-userAction: SyslogTopic
+    topic-serviceAccess: serviceInterface
+    consumer:
+      enable-auto-commit: true
+      group-id: kafkaGroup
+      auto-offset-reset: earliest
+      auto-commit-interval: 100ms
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        session.timeout.ms: 15000
+    template:
+      default-topic: SyslogTopic
+  elasticsearch:
+    rest:
+      uris: 192.168.187.51:9200
+
+logging:
+  level:
+    "org.springframework": info
+    com.example.demo.mapper: DEBUG
+
+es:
+  index:
+    resources: resources_collect
+
+
+
+
+

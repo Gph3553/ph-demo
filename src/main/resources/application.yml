@@ -1,0 +1,37 @@
+seaboxdata:
+  core:
+    idgenerator:
+      mode: snowflake
+      datacenter: 1
+      worker: 1
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 10000MB
+  application:
+    name: rsp-dictory
+  profiles:
+    active: gph
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql.default:3306/rsp_server_${spring.profiles.active}?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+    username: jinxin
+    password: jinxin
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 1
+      maximum-pool-size: 5
+      idle-timeout: 10000
+      auto-commit: true
+mybatis:
+  config-location: mybatis-config.xml
+  mapper-locations: /mapper/*.xml
+  type-aliases-package: com.example.demo.mapper
+  type-handlers-package: com.example.demo.config.handler
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
