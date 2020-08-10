@@ -7,4 +7,5 @@ import com.example.demo.model.Dictionary;
 public interface DictoryService extends IService<Dictionary> {
     void dicOracle(Long id);
     void addDataAccess();
+
 }

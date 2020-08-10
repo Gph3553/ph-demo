@@ -5,9 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.data.elasticsearch.annotations.CompletionField;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
@@ -23,6 +29,7 @@ import java.util.Optional;
 @TableName("resources_catalogue")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@Document(indexName = "resindex",type = "ressuggest")
 @Data
 public class ResourcesCatalogue implements Serializable {
 
@@ -48,11 +55,15 @@ public class ResourcesCatalogue implements Serializable {
 	/**
 	 * 修改时间
 	 */
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime modifyTm;
 	/**
 	 * 创建时间
 	 */
-	private LocalDateTime createTm;
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	private String createTm;
 	/**
 	 * 资源提供方部门id
 	 */
@@ -64,6 +75,7 @@ public class ResourcesCatalogue implements Serializable {
 	/**
 	 * 资源名称
 	 */
+	@CompletionField(analyzer = "ik_smart",searchAnalyzer = "ik_smart")
 	private String resourceName;
 	/**
 	 * 资源代码
@@ -153,6 +165,8 @@ public class ResourcesCatalogue implements Serializable {
 	/**
 	 * 发布日期
 	 */
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime pushDate;
 	/**
 	 * 资源提供方代码
@@ -189,6 +203,8 @@ public class ResourcesCatalogue implements Serializable {
 	/**
 	 * 接入时间
 	 */
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime accessDate;
 	/**
 	 * 开放属性

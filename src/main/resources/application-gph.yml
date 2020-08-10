@@ -59,6 +59,16 @@ es:
   index:
     resources: resources_collect
 
+apache:
+  rocketmq:
+    #消费者的配置
+    consumer:
+      pushConsumer: PhConsumer
+    #生产者的配置
+    producer:
+      producerGroup: Ph
+    namesrvAddr: hdp-02:9876
+
 
 
 
